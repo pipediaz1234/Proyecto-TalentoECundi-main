@@ -1,0 +1,65 @@
+/* styles.module.css */
+
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+}
+
+.cardLeft{
+    background-color: #C89104; 
+    color: #003A22;
+    text-align: center;
+    border: none;
+}
+
+.subjectLabel {
+    display: inline-block;
+    background-color: #FCEC74;
+    color: #644902;
+    padding: 0.25em 0.75em;
+    margin-right: 0.5em;
+    border-radius: 0.25em;
+    font-size: 14px;
+    font-weight: bold;
+    border-color: #C89104;
+    border-width: 20px;
+}
+
+.questionButton {
+    width: 40px;               
+    height: 40px;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+.questionButton.active {
+    background-color: #003A22;
+    color: white;
+    border-color: #003A22;
+}
+
+
+.correctButton {
+    background-color: #598573;  
+    color: #002416;
+    border: none;
+}
+
+
+.incorrectButton {
+    background-color: #C12D2F;  
+    color: #002416;
+    border: none;
+}
+
+
+.finalizarButton {
+    background-color: #003A22;  
+    color: white;
+    font-weight: bold;
+    border: none;
+    padding: 10px;
+    width: 100%;
+}
