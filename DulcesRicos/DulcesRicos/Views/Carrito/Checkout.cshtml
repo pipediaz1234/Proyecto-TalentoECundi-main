@@ -1,0 +1,283 @@
+﻿@model List<DulcesRicos.Models.CarritoItem>
+
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f1f1f1;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .container {
+            margin-top: 40px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #ff7043;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        table.table {
+            margin-bottom: 40px;
+        }
+
+        .table th {
+            background-color: #ff7043;
+            color: white;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background-color: #ff7043;
+            border-color: #ff7043;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #ff5722;
+                border-color: #ff5722;
+            }
+
+        footer {
+            background-color: #ff7043;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .alert {
+            margin-top: 20px;
+            display: none;
+        }
+
+        #infoPago {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .info-message {
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+            .info-message.nequi {
+                background-color: #4caf50;
+            }
+
+            .info-message.daviplata {
+                background-color: #2196f3;
+            }
+
+            .info-message.contra-entrega {
+                background-color: #ff9800;
+            }
+
+            .info-message.propina {
+                background-color: #00bcd4;
+            }
+
+            .info-message.no-propina {
+                background-color: #9e9e9e;
+            }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+        }
+
+        .disabled {
+            pointer-events: none;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Precio unitario</th>
+                    <th>Cantidad</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Producto.Nombre</td>
+                        <td>@item.Producto.Precio</td>
+                        <td>@item.Cantidad</td>
+                        <td>@(item.Producto.Precio * item.Cantidad)</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3"><strong>Total</strong></td>
+                    <td><strong>@ViewBag.Total</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <form id="checkoutForm" method="post" asp-controller="Carrito" asp-action="Pagar">
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" class="form-control" required>
+                <span class="error" id="nombreError"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Correo electrónico para factura electrónica 💵</label>
+                <input type="email" id="email" name="userEmail" class="form-control" required>
+                <span class="error" id="emailError"></span>
+            </div>
+            <div class="form-group">
+                <label for="direccion">Dirección 🥟🍚</label>
+                <input type="text" id="direccion" name="direccion" class="form-control" required>
+                <span class="error" id="direccionError"></span>
+            </div>
+            <div class="form-group">
+                <label for="metodoPago">Método de pago 💸</label>
+                <select id="metodoPago" name="metodoPago" class="form-control" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="Nequi">Nequi</option>
+                    <option value="Daviplata">Daviplata</option>
+                    <option value="Contra entrega">Contra entrega</option>
+                </select>
+                <span class="error" id="metodoPagoError"></span>
+            </div>
+            <div class="form-group">
+                <label for="modoDomicilio">Modo de Domicilio 🏍️</label>
+                <select id="modoDomicilio" name="modoDomicilio" class="form-control" required>
+                    <option value="">Seleccionar...</option>
+                    <option value="Si (CON PROPINA) 👌">Si (CON PROPINA 👌)</option>
+                    <option value="No (Lo recogen en el restaurante 😮)">No (Lo recogen en el restaurante 😮)</option>
+                </select>
+                <span class="error" id="modoDomicilioError"></span>
+            </div>
+
+            <div id="infoPago" class="info-message"></div>
+
+            <div class="btn-container">
+                <button type="button" class="btn btn-primary disabled" id="pagarBtn" data-toggle="modal" data-target="#confirmationModal">Pagar</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Modal de Confirmación -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirmación de Pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Apenas se confirme el pago a través de la billetera virtual, su pedido será enviado de inmediato. Si opta por el pago contra entrega, su pedido estará listo para recogerse en el restaurante.La dirección del establecimiento es Cra 12 #16-32, Centro, Facatativá.</p>
+                    <div id="direccionEstablecimiento" class="alert alert-warning" style="display: none;">
+                        <strong>Nota:</strong> La dirección del establecimiento es Cra 12 #16-32, Centro, Facatativá.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="confirmarPago()">Confirmar Pago</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; @DateTime.Now.Year. 🍔🍟 - COMIDAS DON YOHAN
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function actualizarInfoPago() {
+            var metodoPago = document.getElementById('metodoPago').value;
+            var modoDomicilio = document.getElementById('modoDomicilio').value;
+            var infoPago = document.getElementById('infoPago');
+            var metodoPagoError = document.getElementById('metodoPagoError');
+            var modoDomicilioError = document.getElementById('modoDomicilioError');
+
+            metodoPagoError.innerText = metodoPago === '' ? 'Debe seleccionar un método de pago' : '';
+            modoDomicilioError.innerText = modoDomicilio === '' ? 'Debe seleccionar un modo de domicilio' : '';
+
+            if (metodoPago === 'Nequi') {
+                infoPago.innerText = 'Coloca este número en tu (NEQUI📲) billetera virtual: 3208036567';
+                infoPago.className = 'info-message nequi';
+                infoPago.style.display = 'block';
+            } else if (metodoPago === 'Daviplata') {
+                infoPago.innerText = 'Coloca este número en tu (DAVIPLATA📲) billetera virtual: 3214567893';
+                infoPago.className = 'info-message daviplata';
+                infoPago.style.display = 'block';
+            } else if (metodoPago === 'Contra entrega') {
+                infoPago.innerText = 'Te esperamos en la Cra. 12 #16-32, Funza, Cundinamarca 🥹🤪🍕';
+                infoPago.className = 'info-message contra-entrega';
+                infoPago.style.display = 'block';
+            } else {
+                infoPago.style.display = 'none';
+            }
+        }
+
+        document.getElementById('checkoutForm').addEventListener('input', function () {
+            var nombre = document.getElementById('nombre').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var direccion = document.getElementById('direccion').value.trim();
+            var metodoPago = document.getElementById('metodoPago').value;
+            var modoDomicilio = document.getElementById('modoDomicilio').value;
+            var pagarBtn = document.getElementById('pagarBtn');
+
+            document.getElementById('nombreError').innerText = nombre === '' ? 'El nombre es obligatorio' : '';
+            document.getElementById('emailError').innerText = email === '' ? 'El correo es obligatorio' : '';
+            document.getElementById('direccionError').innerText = direccion === '' ? 'La dirección es obligatoria' : '';
+            document.getElementById('metodoPagoError').innerText = metodoPago === '' ? 'Debe seleccionar un método de pago' : '';
+            document.getElementById('modoDomicilioError').innerText = modoDomicilio === '' ? 'Debe seleccionar un modo de domicilio' : '';
+
+            var allFieldsFilled = nombre !== '' && email !== '' && direccion !== '' && metodoPago !== '' && modoDomicilio !== '';
+            pagarBtn.classList.toggle('disabled', !allFieldsFilled);
+
+            actualizarInfoPago();
+        });
+
+        document.getElementById('metodoPago').addEventListener('change', actualizarInfoPago);
+        document.getElementById('modoDomicilio').addEventListener('change', actualizarInfoPago);
+
+        function confirmarPago() {
+            document.getElementById('checkoutForm').submit();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,202 @@
+/* Configuración base de la página */
+html {
+    font-size: 15px; /* Tamaño base ligeramente más pequeño */
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+/* Diseño del cuerpo de la página */
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    background-color: #f7f7fa;
+    line-height: 1.5;
+    padding-bottom: 60px;
+    margin: 0;
+}
+
+/* Ajustes responsivos para pantallas medianas y grandes */
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 17px;
+    }
+}
+
+/* Estilos para enlaces */
+a {
+    color: #ff6f00;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+    a:hover {
+        color: #ff3d00;
+        text-decoration: underline;
+    }
+
+/* Contenedor principal */
+.container {
+    margin: 20px auto;
+    max-width: 960px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+    .container:hover {
+        transform: scale(1.02);
+    }
+
+/* Pie de página fijo */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #ff6f00;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    line-height: 50px;
+    font-size: 13px;
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    footer:hover {
+        background-color: #ff3d00;
+    }
+
+/* Botones llamativos */
+button {
+    background-color: #ff6f00;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+    button:hover {
+        background-color: #ff3d00;
+        transform: scale(1.05);
+    }
+
+    button:active {
+        transform: scale(0.98);
+    }
+
+/* Campos de formulario mejorados */
+input, textarea, select {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    input:focus, textarea:focus, select:focus {
+        border-color: #ff6f00;
+        box-shadow: 0 0 6px rgba(255, 111, 0, 0.3);
+        outline: none;
+    }
+
+/* Ajustes de tipografía */
+h1 {
+    color: #ff6f00;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+}
+
+h3 {
+    color: #555;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 15px;
+}
+
+/* Estilos para listas */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li::before {
+    content: "• ";
+    color: #ff6f00;
+    font-size: 1.2rem;
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: fadeIn 1s ease-in-out;
+}
+
+/* Ajustes responsivos para pantallas pequeñas */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    .container {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    button {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    footer {
+        height: 45px;
+        line-height: 45px;
+        font-size: 12px;
+    }
+}
+l

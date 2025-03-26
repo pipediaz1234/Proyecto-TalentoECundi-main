@@ -1,0 +1,75 @@
+﻿@model DulcesRicos.Models.Producto
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Producto</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        .img-thumbnail {
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .alert {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Eliminar Producto</h1>
+
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">Confirmación de Eliminación</h4>
+            <p>¿Estás seguro de que deseas eliminar este producto? Esta acción no se puede deshacer.</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="mb-3">Detalles del Producto</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Nombre: @Html.DisplayFor(model => model.Nombre)</h5>
+                        <!-- Se debe usar DisplayFor sin llamar a ToString() en Razor -->
+                        <p class="card-text">Precio: @Html.DisplayFor(model => model.Precio)</p>
+                        <p class="card-text">Stock: @Html.DisplayFor(model => model.Stock)</p>
+                        <!-- La propiedad Imagen debe ser una URL relativa -->
+                        <img src="~/images/@Model.Imagen" alt="@Model.Nombre" class="img-thumbnail" style="max-width: 100%; max-height: 200px;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger mt-3" role="alert">
+                @TempData["Error"]
+            </div>
+        }
+
+        <div class="mt-4">
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="ProductoId" />
+                <button type="submit" class="btn btn-danger">Eliminar Producto</button>
+                <a asp-action="Index" class="btn btn-secondary ml-2">Cancelar</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

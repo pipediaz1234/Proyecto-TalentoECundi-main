@@ -1,0 +1,174 @@
+﻿@model DulcesRicos.Models.ViewModels.LoginViewModel
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión - COMIDAS DON YOHAN 🤑</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/dulceria-styles.css" asp-append-version="true" />
+    <style>
+        body {
+            background-color: #f0f8ff; /* Fondo suave para la página */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .card {
+            border-radius: 15px; /* Bordes redondeados en la tarjeta */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+            overflow: hidden;
+            border: none; /* Sin borde adicional */
+        }
+
+        .card-header {
+            background: linear-gradient(to right, #ff6f00, #ff3d00); /* Gradiente atractivo */
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            border-bottom: none; /* Elimina la línea delgada debajo del encabezado */
+        }
+
+            .card-header h1 {
+                font-size: 2em; /* Tamaño de fuente más grande para mejor legibilidad */
+                font-weight: bold;
+                margin: 0;
+                color: #fff; /* Color blanco para el título */
+            }
+
+        .btn-primary {
+            background-color: #ff6f00;
+            border-color: #ff6f00;
+            font-size: 1.1em;
+            font-weight: bold;
+            padding: 12px 20px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+            .btn-primary:hover {
+                background-color: #ff3d00;
+                border-color: #ff3d00;
+                transform: scale(1.05);
+            }
+
+        .form-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            padding: 12px;
+            font-size: 1em;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+            .form-control:focus {
+                border-color: #ff6f00;
+                box-shadow: 0 0 5px rgba(255, 111, 0, 0.3);
+                outline: none;
+            }
+
+        .text-primary {
+            color: #ff6f00;
+            font-weight: bold;
+        }
+
+            .text-primary:hover {
+                color: #ff3d00;
+            }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .text-center p {
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .text-center a {
+            font-weight: bold;
+            color: #ff6f00;
+        }
+
+            .text-center a:hover {
+                color: #ff3d00;
+            }
+
+        .alert {
+            border-radius: 5px;
+            padding: 1rem;
+            font-size: 1em;
+            margin-top: 1rem;
+        }
+
+        .alert-info {
+            background-color: #d9edf7;
+            border-color: #bce8f1;
+            color: #31708f;
+        }
+
+        /* Estilo del modal */
+        .modal-dialog {
+            max-width: 500px; /* Tamaño máximo del modal */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header">
+                        <h1 class="text-center">Iniciar sesión 🤑</h1>
+                    </div>
+                    <div class="card-body">
+                        <form asp-controller="Account" asp-action="Login" method="post">
+                            <div class="mb-3">
+                                <label asp-for="CorreoElectronico" class="form-label">Correo electrónico:</label>
+                                <input asp-for="CorreoElectronico" class="form-control" />
+                                <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Contrasena" class="form-label">Contraseña:</label>
+                                <input asp-for="Contrasena" type="password" class="form-control" />
+                                <span asp-validation-for="Contrasena" class="text-danger"></span>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                            </div>
+                            <div class="text-center mt-3">
+                                <p>¿Olvidaste tu contraseña😮? <a href="#" data-bs-toggle="modal" data-bs-target="#recoveryModal" class="text-primary">Recupérala aquí</a>.</p>
+                                <p>¿No tienes una cuenta👀? Regístrate <a asp-action="Register" asp-controller="Account" class="text-primary">aquí</a>.</p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de recuperación de contraseña -->
+    <div class="modal fade" id="recoveryModal" tabindex="-1" aria-labelledby="recoveryModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="recoveryModalLabel">Recuperación de Contraseña</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Si has olvidado tu contraseña, por favor contacta a <strong>administrador@gmail.com</strong> o llama al <strong>3256987863</strong> para asistencia.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

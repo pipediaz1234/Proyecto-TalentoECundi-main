@@ -1,0 +1,92 @@
+﻿/* Estilos generales del body */
+body {
+    background-image: url('../images/fondo.jpeg');
+    background-size: cover; /* Ajusta el tamaño de la imagen al contenedor */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    font-family: 'Arial', sans-serif; /* Fuente general */
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos para el contenedor principal */
+.container {
+    margin-top: 50px;
+}
+
+/* Estilos para la tarjeta de login */
+.card {
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    border: none; /* Sin borde adicional */
+}
+
+.card-header {
+    background-color: #fff; /* Color de fondo del encabezado */
+    border-bottom: none; /* Sin borde inferior */
+    padding: 1.5rem; /* Espaciado */
+    text-align: center; /* Centrar el texto */
+}
+
+    .card-header h1 {
+        color: #ff6f00; /* Color del título */
+        font-weight: bold; /* Negrita */
+        margin: 0; /* Sin márgenes */
+        font-size: 1.5rem; /* Tamaño de fuente reducido */
+    }
+
+/* Estilos para los formularios */
+.form-control {
+    border-radius: 8px; /* Bordes redondeados */
+    border-color: #ccc; /* Color del borde del input */
+    padding: 10px; /* Espaciado interno */
+    font-size: 0.9rem; /* Tamaño de fuente reducido */
+}
+
+    .form-control:focus {
+        border-color: #ff6f00; /* Color del borde al enfocar */
+        box-shadow: 0 0 5px rgba(255, 111, 0, 0.3); /* Sombra al enfocar */
+        outline: none; /* Sin contorno */
+    }
+
+/* Estilos para el botón primario */
+.btn-primary {
+    background-color: #ff6f00; /* Color de fondo del botón */
+    border-color: #ff6f00; /* Color del borde del botón */
+    font-weight: bold; /* Negrita */
+    padding: 8px 16px; /* Espaciado interno reducido */
+    font-size: 0.9rem; /* Tamaño de fuente reducido */
+    transition: background-color 0.3s, border-color 0.3s; /* Transición suave */
+}
+
+    .btn-primary:hover {
+        background-color: #ff3d00; /* Color de fondo al pasar el mouse por encima */
+        border-color: #ff3d00; /* Color del borde al pasar el mouse por encima */
+    }
+
+/* Estilos para el texto resaltado */
+.text-primary {
+    color: #ff6f00; /* Color del texto resaltado */
+    font-weight: bold; /* Negrita */
+}
+
+    .text-primary:hover {
+        color: #ff3d00; /* Color del texto al pasar el mouse por encima */
+    }
+
+/* Estilos adicionales */
+h1 {
+    color: #ff6f00; /* Color del título */
+    font-weight: bold; /* Negrita */
+    font-size: 1.5rem; /* Tamaño de fuente reducido */
+    text-align: center; /* Centrar el texto */
+}
+
+/* Ajuste para enlaces dentro de textos */
+.text-center a {
+    color: #ff6f00; /* Color de los enlaces */
+    font-weight: bold; /* Negrita */
+}
+
+    .text-center a:hover {
+        color: #ff3d00; /* Color de los enlaces al pasar el mouse por encima */
+    }

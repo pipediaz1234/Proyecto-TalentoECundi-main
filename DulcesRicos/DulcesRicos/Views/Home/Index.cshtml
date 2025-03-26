@@ -1,0 +1,154 @@
+﻿@model IEnumerable<DulcesRicos.Models.Producto>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Productos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        /* Animación al pasar el mouse sobre la imagen */
+        .card:hover .card-img-top {
+            transform: scale(1.1);
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .card-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            font-weight: bold;
+        }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+                border-color: #004085;
+            }
+
+        .text-danger {
+            color: red; /* Cambia a rojo para el texto de "Producto Agotado" */
+        }
+
+        .back-button {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .btn-disabled {
+            background-color: #ccc; /* Color gris para el botón deshabilitado */
+            border-color: #ccc;
+            cursor: not-allowed; /* Cambiar el cursor al pasar el mouse */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4 text-center">Listado de Productos</h1>
+
+        <div class="row">
+            @foreach (var producto in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <!-- Imagen del producto con animación -->
+                        <img src="~/images/@producto.Imagen" class="card-img-top" alt="@producto.Nombre">
+
+                        <div class="card-body">
+                            <!-- Nombre del producto -->
+                            <h5 class="card-title">@producto.Nombre</h5>
+                            <!-- Precio del producto -->
+                            <p class="card-text">Precio: @producto.Precio.ToString("C")</p>
+                            <!-- Stock del producto -->
+                            <p class="card-text">Stock: @producto.Stock</p>
+                            <!-- Descripción del producto -->
+                            <p class="card-text">Descripción: @producto.Descripcion</p>
+                        </div>
+
+                        <div class="card-footer">
+                            @if (producto.Stock > 0)
+                            {
+                                <form asp-controller="Home" asp-action="AddToCart" method="post">
+                                    <input type="hidden" name="id" value="@producto.ProductoId" />
+
+                                    <!-- Selección de cantidad -->
+                                    <label for="cantidad">Cantidad:</label>
+                                    <select name="cantidad" id="cantidad" class="form-control mb-2">
+                                        @for (int i = 1; i <= producto.Stock; i++)
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    </select>
+
+                                    <button type="submit" class="btn btn-primary">Agregar al Carrito</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <p class="text-danger">Producto no disponible en el momento 🥺😿</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (User.IsInRole("Admin")) // Mostrar el botón "Ver Productos" solo si el usuario es administrador
+        {
+            <div class="text-center back-button">
+                <a asp-controller="Productos" asp-action="Index" class="btn btn-primary btn-lg">Ver Productos</a>
+            </div>
+        }
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

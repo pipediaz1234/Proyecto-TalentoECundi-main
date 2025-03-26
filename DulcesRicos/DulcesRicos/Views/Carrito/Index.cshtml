@@ -1,0 +1,149 @@
+﻿@model List<DulcesRicos.Models.CarritoItem>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #ff6f00;
+            margin-bottom: 20px;
+        }
+
+        table.table {
+            margin-bottom: 20px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        .total-container {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: right;
+        }
+
+        .total-container h4 {
+            margin-bottom: 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Carrito de Compras</h1>
+
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="cart-items">
+                @foreach (var item in Model)
+                {
+                    <tr id="fila-@item.ProductoId">
+                        <td>@item.Producto.Nombre</td>
+                        <td>@item.Cantidad</td>
+                        <td>@item.Producto.Precio</td>
+                        <td>@(item.Producto.Precio * item.Cantidad)</td>
+                        <td>
+                            <!-- Selector de cantidad para eliminar -->
+                            <select id="cantidadEliminar-@item.ProductoId" class="form-control" style="width: 100px; display: inline-block;">
+                                @for (int i = 1; i <= item.Cantidad; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                            <button class="btn btn-danger" onclick="eliminarProducto(@item.ProductoId)">Eliminar</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="total-container">
+            <h4>Total del Carrito: <span id="total">@ViewBag.Total</span></h4>
+        </div>
+
+        <a asp-action="Checkout" class="btn btn-primary btn-lg btn-block mt-4">Pagar</a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        function eliminarProducto(productId) {
+            var cantidadEliminar = $('#cantidadEliminar-' + productId).val(); // Obtener cantidad seleccionada
+
+            if (confirm("¿Está seguro de que desea eliminar " + cantidadEliminar + " unidad(es) de este producto?")) {
+                $.ajax({
+                    url: '@Url.Action("RemoveFromCart", "Carrito")', // Ruta al método del controlador
+                    type: 'POST',
+                    data: {
+                        id: productId,
+                        cantidad: cantidadEliminar // Enviar la cantidad seleccionada
+                    },
+                    success: function (response) {
+                        if (response.exito) {
+                            // Si la respuesta es exitosa, actualizamos la tabla y el total
+                            $('#fila-' + productId).find('td:eq(1)').text(response.nuevaCantidad); // Actualizar cantidad en la tabla
+                            if (response.nuevaCantidad == 0) {
+                                $('#fila-' + productId).remove(); // Eliminar fila si no queda stock
+                            }
+                            $('#total').text(response.nuevoTotal); // Actualizar total
+                        } else {
+                            alert(response.mensaje);
+                        }
+                    },
+                    error: function () {
+                        alert("Error al eliminar el producto.");
+                    }
+                });
+            }
+        }
+    </script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+﻿@model DulcesRicos.Models.ViewModels.RegisterViewModel
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrarse - COMIDAS DON YOHAN 🥴</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/dulceria-styles.css" asp-append-version="true" />
+    <style>
+        body {
+            background: #f0f8ff; /* Fondo claro y agradable */
+            font-family: 'Arial', sans-serif;
+        }
+
+        .card {
+            border-radius: 15px; /* Bordes redondeados más sutiles */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra más sutil */
+            overflow: hidden;
+            background: transparent; /* Fondo transparente */
+        }
+
+        .card-header {
+            background: linear-gradient(to right, #ff6f00, #ff3d00); /* Gradiente atractivo */
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            border-bottom: none;
+        }
+
+            .card-header h1 {
+                font-size: 2.5em; /* Tamaño de fuente más grande para el encabezado */
+                margin: 0;
+                color: #fff; /* Color blanco para el título */
+            }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            padding: 12px;
+            font-size: 1em;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+            .form-control:focus {
+                border-color: #ff6f00;
+                box-shadow: 0 0 8px rgba(255, 111, 0, 0.3);
+                outline: none;
+            }
+
+        .btn-primary {
+            background-color: #ff6f00; /* Botón naranja */
+            color: #ffffff; /* Texto del botón en blanco */
+            border: 2px solid #ff6f00; /* Borde del botón en color primario */
+            font-size: 1.1em;
+            font-weight: bold;
+            padding: 12px 20px;
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+        }
+
+            .btn-primary:hover {
+                background-color: #ff3d00; /* Fondo del botón al pasar el ratón */
+                color: #ffffff; /* Texto del botón en blanco */
+                transform: scale(1.05);
+            }
+
+        .text-center p {
+            font-size: 1.1em;
+            margin-top: 20px;
+        }
+
+        .text-center a {
+            font-weight: bold;
+            color: #ff6f00;
+        }
+
+            .text-center a:hover {
+                color: #ff3d00;
+            }
+
+        .text-danger {
+            font-size: 0.875em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card border-0 shadow">
+                    <div class="card-header">
+                        <h1>Registrarse 🥴</h1>
+                    </div>
+                    <div class="card-body">
+                        <form asp-controller="Account" asp-action="Register" method="post">
+                            <div class="mb-3">
+                                <label asp-for="Nombre" class="form-label">Nombre:</label>
+                                <input asp-for="Nombre" class="form-control" />
+                                <span asp-validation-for="Nombre" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="CorreoElectronico" class="form-label">Correo electrónico:</label>
+                                <input asp-for="CorreoElectronico" class="form-control" />
+                                <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="Contrasena" class="form-label">Contraseña:</label>
+                                <input asp-for="Contrasena" type="password" class="form-control" />
+                                <span asp-validation-for="Contrasena" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Rol:</label>
+                                <select asp-for="EsAdministrador" class="form-control">
+                                    <option value="false">Usuario</option>
+                                    <option value="true">Administrador</option>
+                                </select>
+                                <span asp-validation-for="EsAdministrador" class="text-danger"></span>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Registrarse🥺</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
