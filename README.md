@@ -69,6 +69,7 @@ Uso permitido únicamente para fines educativos y de documentación instituciona
 🌐 [LinkedIn](https://www.linkedin.com/in/andres-felipe-diaz-campos-398245207/)
 
 ---
-
+link del manual 
+https://github.com/pipediaz1234/Proyecto-TalentoECundi-main/blob/main/MANUAL%20DE%20USUARIO%20%20TALENTO%20E-CUNDI.pdf
 
 
