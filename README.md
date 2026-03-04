@@ -65,7 +65,7 @@ Uso permitido únicamente para fines educativos y de documentación instituciona
 ## 📬 Contacto
 
 **Andrés Felipe Díaz Campos**  
-📧 pipediaz1234@gmail.com  
+📧 pipediazcampos1429@gmail.com  
 🌐 [LinkedIn](https://www.linkedin.com/in/andres-felipe-diaz-campos-398245207/)
 
 ---
